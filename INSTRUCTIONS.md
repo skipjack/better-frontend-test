@@ -25,8 +25,6 @@ Please implement the spec (design and product) using these instructions.
   screen and also sent to the server's API endpoint described in previous step
 * There is no need for persistence (database or otherwise)
 * Choose any frameworks (or no frameworks)
-* Provide the entire source code (without node_modules) and instructions how to
-  start it.
 * Supported browsers: Chrome 65 or later
 
 
@@ -36,13 +34,13 @@ Here is a rough list of features in decreasing order of how important we think
 they are to implement:
 
 * [x] Create a single-user timeline of posts that conforms to the design spec.
-* [ ] The timeline must support new posts by the current user.
+* [x] The timeline must support new posts by the current user.
 * [x] Mouseover (tap on mobile) on a post should transition the post into the alternative view ([Backside](Design-Spec-Click.png)) - use 3D transition
-* [ ] The interface should be responsive; it should scale with the viewport size.
-* [ ] Use your experience to implement validation logic
-* [ ] Every post needs to have date and time as well as user's avatar
+* [x] The interface should be responsive; it should scale with the viewport size.
+* [x] Use your experience to implement validation logic
+* [x] Every post needs to have date and time as well as user's avatar
 * [ ] Certain UI aspects are left unspecified - please use your creativity for implementing interactions, animations etc.
-* [ ] Mobile version of the UI is purposely not specified - it should be done based on your ideas
+* [x] Mobile version of the UI is purposely not specified - it should be done based on your ideas
 
 
 ## How to submit your work

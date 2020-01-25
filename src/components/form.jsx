@@ -21,18 +21,19 @@ const Form = ({
                 flex: '0 0 auto',
                 display: 'flex',
                 alignItems: 'center',
-                marginTop: 50,
                 marginBottom: 0,
                 borderTop: `1px solid ${colors.green}`
             }}
             onSubmit={ e => {
                 e.preventDefault()
                 onSubmit(message)
+                setMessage('')
             }}
         >
             <span
                 style={{
                     paddingLeft: 8,
+                    marginRight: 8,
                     width: 30,
                     fontSize: 12,
                     color: colors.grey

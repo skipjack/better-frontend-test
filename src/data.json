@@ -4,19 +4,29 @@
       "id": 1,
       "username": "marymeeker",
       "real_name": "Mary Meeker",
+      "active_since": 1327968739,
       "verified": true
     },
     {
       "id": 2,
       "username": "ConanOBrien",
       "real_name": "Conan O'Brien",
+      "active_since": 1335968739,
       "verified": true
     },
     {
       "id": 3,
       "username": "baratunde",
       "real_name": "Baratunde",
+      "active_since": 1460566800,
       "verified": false
+    },
+    {
+      "id": 4,
+      "username": "better",
+      "real_name": "Better Mortgage",
+      "active_since": 1579983769,
+      "verified": true
     }
   ],
   "posts": [
@@ -45,5 +55,4 @@
       "ts": 1478942943
     }
   ]
-  
 }

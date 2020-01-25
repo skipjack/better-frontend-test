@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSpring, animated } from 'react-spring'
-import { colors } from '../utils.js'
+import { colors, timeAgo, getFormattedDate } from '../utils.js'
 import Calendar from './calendar.jsx'
 
 
@@ -9,8 +9,9 @@ const Message = ({
     alt = false,
     image = 'https://images.unsplash.com/profile-fb-1527368999-01bec71421e9.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=128&w=128',
     author,
-    timestamp = 1337774582,
-    content = 'Message...'
+    timestamp,
+    content,
+    width
 }) => {
     const [ flipped, setFlipped ] = useState(false)
     const { transform, opacity } = useSpring({
@@ -26,17 +27,17 @@ const Message = ({
                 width: '100%',
                 maxWidth: 560,
                 marginBottom: 16,
-                alignSelf: alt ? 'flex-end' : 'auto'
+                alignSelf: alt ? 'flex-end' : 'auto',
+                overflow: 'hidden'
             }}
         >
             <img
                 src={ image }
-                width={ 50 }
-                height={ 50 }
+                width={ width < 720 ? 40 : 50 }
+                height={ width < 720 ? 40 : 50 }
                 style={{
                     order: alt ? 1 : 0,
                     flex: '0 0 auto',
-                    [alt ? 'marginLeft' : 'marginRight']: 12,
                     borderRadius: '100%',
                     overflow: 'hidden',
                     background: colors.lightgrey
@@ -44,7 +45,9 @@ const Message = ({
             />
             <section
                 style={{
-                    flex: '1 1 auto'
+                    flex: '1 1 auto',
+                    padding: '0 12px',
+                    overflow: 'hidden'
                 }}
             >
                 <div
@@ -62,7 +65,8 @@ const Message = ({
                             display: alt ? 'none' : null
                         }}
                     >
-                        John Doe - @jdoe
+                        { author.real_name }
+                        { width > 720 ? `- @${author.username}` : null }
                     </span>
                     <span
                         style={{
@@ -71,7 +75,7 @@ const Message = ({
                         }}
                     />
                     <span style={{ order: alt ? 0 : 2 }}>
-                        timeAgo
+                        { timeAgo(timestamp) }
                     </span>
                 </div>
                 <div
@@ -88,7 +92,7 @@ const Message = ({
                             position: 'relative',
                             width: '100%',
                             fontSize: 14,
-                            padding: 16,
+                            padding: width < 720 ? '8px 12px' : '12px 16px',
                             borderRadius: 8,
                             lineHeight: 1.5,
                             background: alt ? colors.green : colors.lightgrey,
@@ -116,7 +120,15 @@ const Message = ({
                         }}
                     >
                         <Calendar />&nbsp;
-                        active since July 13th, 2017
+                        active since&nbsp;
+                        { 
+                            getFormattedDate(
+                                new Date(author.active_since * 1000),
+                                null,
+                                false,
+                                true
+                            )
+                        }
                     </animated.div>
                 </div>
             </section>
@@ -127,9 +139,10 @@ const Message = ({
 Message.propTypes = {
     alt: PropTypes.bool,
     image: PropTypes.string,
-    author: PropTypes.string,
-    timestamp: PropTypes.number,
-    content: PropTypes.string
+    author: PropTypes.object.isRequired,
+    timestamp: PropTypes.number.isRequired,
+    content: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired
 }
 
 export default Message

@@ -1,45 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useWindowSize } from 'react-use'
+import Wrapper from './wrapper.jsx'
+import Container from './container.jsx'
 import Message from './message.jsx'
 import Form from './form.jsx'
-import { colors } from '../utils.js'
 
-const App = props => (
-    <React.Fragment>
-        <style>{`
-            body { margin: 0; }
-            body * { box-sizing: border-box; }
-            input::placeholder { color: ${colors.grey}; }
-        `}</style>
-        <main
-            style={{
-                fontFamily: 'Roboto, sans-serif',
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100vh',
-                maxWidth: 960,
-                margin: '0 auto'
-            }}
-        >
-            <div
-                style={{
-                    flex: '1 1 auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    padding: '0 24px'
-                }}
-            >
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message alt />
-            </div>
-            <Form
-                onSubmit={ console.log }
-            />
-        </main>
-    </React.Fragment>
-)
+// @tmp
+import data from '../data.json'
+
+const App = props => {
+    const [user, setUser] = useState(data.users.find(obj => obj.id === 4))
+    const [messages, setMessages] = useState(data.posts)
+    const {width} = useWindowSize()
+
+    return (
+        <React.Fragment>
+            <Wrapper>
+                <Container>
+                    {messages.map(message => {
+                        const author = data.users.find(obj => message.user === obj.id)
+
+                        return (
+                            <Message
+                                key={ message.id }
+                                alt={ message.user === user.id }
+                                // image={}
+                                author={ author }
+                                timestamp={ message.ts }
+                                content={ message.message }
+                                width={ width }
+                            />
+                        )
+                    })}
+                </Container>
+                <Form
+                    onSubmit={newMessage => {
+                        // @todo post to server
+                        setMessages([
+                            ...messages,
+                            {
+                                id: messages.length,
+                                user: user.id,
+                                ts: Math.floor(Date.now() / 1000),
+                                message: newMessage
+                            }
+                        ])
+                    }}
+                />
+            </Wrapper>
+        </React.Fragment>
+    )
+}
 
 export default App
