@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useWindowSize } from 'react-use'
 import Wrapper from './wrapper.jsx'
 import Container from './container.jsx'
@@ -12,11 +12,12 @@ const App = props => {
     const [user, setUser] = useState(data.users.find(obj => obj.id === 4))
     const [messages, setMessages] = useState(data.posts)
     const {width} = useWindowSize()
+    const container = useRef(null)
 
     return (
         <React.Fragment>
             <Wrapper>
-                <Container>
+                <Container ref={ container }>
                     {messages.map(message => {
                         const author = data.users.find(obj => message.user === obj.id)
 
@@ -24,7 +25,7 @@ const App = props => {
                             <Message
                                 key={ message.id }
                                 alt={ message.user === user.id }
-                                // image={}
+                                image={ `/images/${author.username}.jpg` }
                                 author={ author }
                                 timestamp={ message.ts }
                                 content={ message.message }
@@ -45,6 +46,12 @@ const App = props => {
                                 message: newMessage
                             }
                         ])
+
+                        setTimeout(() => {
+                            const { scrollHeight } = container.current
+                            
+                            container.current.scrollTop = scrollHeight
+                        })
                     }}
                 />
             </Wrapper>

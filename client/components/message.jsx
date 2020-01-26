@@ -7,7 +7,7 @@ import Calendar from './calendar.jsx'
 
 const Message = ({
     alt = false,
-    image = 'https://images.unsplash.com/profile-fb-1527368999-01bec71421e9.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=128&w=128',
+    image,
     author,
     timestamp,
     content,
@@ -27,7 +27,7 @@ const Message = ({
                 width: '100%',
                 maxWidth: 560,
                 marginBottom: 16,
-                alignSelf: alt ? 'flex-end' : 'auto',
+                marginLeft: alt ? 'auto' : 0,
                 overflow: 'hidden'
             }}
         >

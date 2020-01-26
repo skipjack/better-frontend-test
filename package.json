@@ -5,19 +5,26 @@
   "private": true,
   "author": "Greg Venech",
   "license": "ISC",
+  "type": "module",
   "keywords": [
     "better",
     "chat",
     "client"
   ],
   "scripts": {
-    "start": "parcel src/index.html",
-    "test": "jest"
+    "start": "parcel client/index.html",
+    "prebuild": "rm -rf dist",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "parcel build client/index.html",
+    "build:server": "parcel build server/index.js --target node",
+    "server": "npm run build && node dist/index.js"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

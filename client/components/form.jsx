@@ -13,6 +13,7 @@ const Form = ({
     onSubmit
 }) => {
     const [message, setMessage] = useState('')
+    const maxLength = 140
 
     return (
         <form
@@ -39,11 +40,12 @@ const Form = ({
                     color: colors.grey
                 }}
             >
-                { 140 - message.length }
+                { maxLength - message.length }
             </span>
             <input
                 value={ message }
                 placeholder="what's happening?"
+                maxLength={ maxLength }
                 onChange={ e => setMessage(e.target.value) }
                 style={{
                     flex: '1 1 auto',
