@@ -14,9 +14,9 @@
   "scripts": {
     "start": "parcel client/index.html",
     "prebuild": "rm -rf dist",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "parcel build client/index.html",
-    "build:server": "parcel build server/index.js --target node",
+    "build": "npm run build:server && npm run build:client",
+    "build:client": "parcel build client/index.html -d dist/client",
+    "build:server": "parcel build server/index.js --target node && cp -r ./images ./dist",
     "server": "npm run build && node dist/index.js"
   },
   "devDependencies": {

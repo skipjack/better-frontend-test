@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/server'
 import App from '../client/components/app.jsx'
 import data from './data.json'
 
-const templatePath = path.resolve('./dist/index.html')
+const templatePath = path.resolve(__dirname, './client/index.html')
 const HTML_TEMPLATE = fs.readFileSync(templatePath).toString()
 
 export default (req, res) => {
