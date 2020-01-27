@@ -6,7 +6,13 @@ const production = process.env.NODE_ENV === 'production'
 const element = document.getElementById('root')
 const approach = production ? 'hydrate' : 'render'
 
-ReactDOM[approach](<App />, element)
+ReactDOM[approach](
+    <App
+        users={ window.initialUsers }
+        posts={ window.initialPosts }
+    />,
+    element
+)
 
 if (module.hot) {
     module.hot.accept()

@@ -6,16 +6,18 @@ A branded prototype chat client.
 
 ## Usage
 
-Run it through a parcel development server...
-
-``` bash
-npm install && npm start
-```
-
-Run the full express server...
+Run the full express server:
 
 ```
 npm install && npm run server
+```
+
+Use the following commands to run it through a parcel development server. Note
+that images won't be rendered as they're served from a `/images` endpoint in
+express server (see next command).
+
+``` bash
+npm install && npm start
 ```
 
 > Any recent version of `node` and `npm` should work, I'm on `node@12.13.0`

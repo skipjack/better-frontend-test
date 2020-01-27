@@ -1,10 +1,21 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { useSpring, animated } from 'react-spring'
-import { colors, timeAgo, getFormattedDate } from '../utils.js'
+import Card from './card.jsx'
 import Calendar from './calendar.jsx'
+import Hypertext from './hypertext.jsx'
+import { colors, timeAgo, getFormattedDate } from '../utils.js'
 
-
+/**
+ * Display a chat message and some meta data
+ * 
+ * @param  {boolean} props.alt       - Reverse the color scheme and position
+ * @param  {string}  props.image     - URL of an avatar
+ * @param  {object}  props.author    - An object describing the author
+ * @param  {number}  props.timestamp - Epoch timestamp representing when the message was sent
+ * @param  {string}  props.content   - Body of the message
+ * @param  {number}  props.width     - Width of the current viewport
+ * @return {object}                  - React markup
+ */
 const Message = ({
     alt = false,
     image,
@@ -14,11 +25,6 @@ const Message = ({
     width
 }) => {
     const [ flipped, setFlipped ] = useState(false)
-    const { transform, opacity } = useSpring({
-        opacity: flipped ? 1 : 0,
-        transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
-        config: { mass: 5, tension: 500, friction: 80 }
-    })
 
     return (
         <article
@@ -78,59 +84,31 @@ const Message = ({
                         { timeAgo(timestamp) }
                     </span>
                 </div>
-                <div
+                <Card
+                    alt={ alt }
+                    flipped={ flipped }
                     onTouchEnd={ e => setFlipped(!flipped) }
                     onMouseOver={ e => setFlipped(true) }
                     onMouseOut={ e => setFlipped(false) }
-                    style={{
-                        position: 'relative',
-                        color: alt || flipped ? 'white' : colors.purple
-                    }}
+                    back={(
+                        <React.Fragment>
+                            <Calendar />&nbsp;
+                            active since&nbsp;
+                            { 
+                                getFormattedDate(
+                                    new Date(author.active_since * 1000),
+                                    null,
+                                    false,
+                                    true
+                                )
+                            }
+                        </React.Fragment>
+                    )}
                 >
-                    <animated.div
-                        style={{
-                            position: 'relative',
-                            width: '100%',
-                            fontSize: 14,
-                            padding: width < 720 ? '8px 12px' : '12px 16px',
-                            borderRadius: 8,
-                            lineHeight: 1.5,
-                            background: alt ? colors.green : colors.lightgrey,
-                            opacity: opacity.interpolate(o => 1 - o),
-                            transform
-                        }}
-                    >
+                    <Hypertext>
                         { content }
-                    </animated.div>
-                    <animated.div
-                        style={{
-                            position: 'absolute',
-                            display: 'flex',
-                            width: '100%',
-                            height: '100%',
-                            top: 0,
-                            left: 0,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: 12.8,
-                            borderRadius: 8,
-                            background: colors.purple,
-                            opacity,
-                            transform: transform.interpolate(t => `${t} rotateX(180deg)`)
-                        }}
-                    >
-                        <Calendar />&nbsp;
-                        active since&nbsp;
-                        { 
-                            getFormattedDate(
-                                new Date(author.active_since * 1000),
-                                null,
-                                false,
-                                true
-                            )
-                        }
-                    </animated.div>
-                </div>
+                    </Hypertext>
+                </Card>
             </section>
         </article>
     )

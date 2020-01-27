@@ -5,12 +5,19 @@ import Container from './container.jsx'
 import Message from './message.jsx'
 import Form from './form.jsx'
 
-// @tmp
-import data from '../data.json'
-
-const App = props => {
-    const [user, setUser] = useState(data.users.find(obj => obj.id === 4))
-    const [messages, setMessages] = useState(data.posts)
+/**
+ * Displays a chat client based on the given posts and users
+ * 
+ * @param  {array}  props.users - A list of user resources
+ * @param  {array}  props.posts - A list of post resources
+ * @return {object}             - React markup
+ */
+const App = ({
+    users = [],
+    posts = []
+}) => {
+    const [user, setUser] = useState(users.find(obj => obj.id === 4))
+    const [messages, setMessages] = useState(posts)
     const {width} = useWindowSize()
     const container = useRef(null)
 
@@ -19,7 +26,7 @@ const App = props => {
             <Wrapper>
                 <Container ref={ container }>
                     {messages.map(message => {
-                        const author = data.users.find(obj => message.user === obj.id)
+                        const author = users.find(obj => message.user === obj.id)
 
                         return (
                             <Message
@@ -36,21 +43,36 @@ const App = props => {
                 </Container>
                 <Form
                     onSubmit={newMessage => {
-                        // @todo post to server
-                        setMessages([
-                            ...messages,
-                            {
-                                id: messages.length,
-                                user: user.id,
-                                ts: Math.floor(Date.now() / 1000),
-                                message: newMessage
-                            }
-                        ])
+                        const message = {
+                            id: messages.length,
+                            user: user.id,
+                            ts: Math.floor(Date.now() / 1000),
+                            message: newMessage
+                        }
 
-                        setTimeout(() => {
-                            const { scrollHeight } = container.current
-                            
-                            container.current.scrollTop = scrollHeight
+                        fetch('/posts', {
+                            method: 'POST',
+                            body: JSON.stringify(message),
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+
+                        }).then(response => {
+                            setMessages([
+                                ...messages,
+                                message
+                            ])
+
+                            setTimeout(() => {
+                                const { scrollHeight } = container.current
+                                
+                                container.current.scrollTop = scrollHeight
+                            })
+
+                        }).catch(error => {
+                            alert('An error occurred.')
+                            console.error(error)
                         })
                     }}
                 />

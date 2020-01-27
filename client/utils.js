@@ -85,3 +85,15 @@ export function timeAgo(timestamp) {
 
     return getFormattedDate(date)
 }
+
+/**
+ * Split out any URLs in the given content
+ * 
+ * @param  {string} content - ...
+ * @return {array}          - ...
+ */
+export function splitURLs(content) {
+    const parts = content.split(urlRegex)
+
+    return parts
+}
