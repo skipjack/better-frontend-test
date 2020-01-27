@@ -1,6 +1,11 @@
 import React from 'react'
 
-
+/**
+ * Displays a calendar icon
+ * 
+ * @param  {object} props - No props currently supported
+ * @return {object}       - React markup
+ */
 const Calendar = props => (
     <svg
         width={ 16 }

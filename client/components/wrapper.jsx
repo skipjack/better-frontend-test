@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-
+/**
+ * Top-level centered container for the application
+ * 
+ * @param  {object} props.children - Any valid react node(s)
+ * @return {object}                - React markup
+ */
 const Wrapper = ({
     children
 }) => (

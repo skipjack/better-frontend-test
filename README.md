@@ -1,7 +1,7 @@
 Better Mortgage Chat
 ====================
 
-A branded prototype chat client.
+A branded prototype chat client per the given [spec][2].
 
 
 ## Usage
@@ -55,3 +55,4 @@ kicks/practice once I can find the time.
 
 
 [1]: https://github.com/gaearon/react-hot-loader#deprecation-note
+[2]: ./SPEC.md
